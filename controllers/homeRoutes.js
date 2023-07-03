@@ -74,4 +74,21 @@ router.get('/login', (req, res) => {
     res.render('login')
 })
 
+// Route to edit page
+router.get('/editpost', async (req, res) => {
+    try {
+        const userData = await User.findByPk(req.session.user_id, {
+            attributes: { exclude: [password] },
+            include: [{ model: BlogPost}], 
+        });
+        const user = userData.get({ plain: true });
+        res.render('editpost', {
+            ...user,
+            logged_in: true
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router
