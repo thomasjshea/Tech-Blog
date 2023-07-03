@@ -15,30 +15,22 @@ BlogPost.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        body: {
+        content: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        user_id: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            references: {
-                model: 'user',
-                key: 'id'
-            }
         },
         date_created: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
         },
-        comment_id: {
-            type: DataTypes.INTEGER,
+        user_id: {
+            type: DataTypes.STRING,
             references: {
-                model: 'comment',
-                key: 'id'
-            }
-        }
+                model: 'user',
+                key: 'id',
+            },
+        },
     },
     {
         sequelize,
