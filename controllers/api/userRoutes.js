@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 });
 
 // Login
-router.post('/login', async (res, req) => {
+router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({
             where: {
@@ -29,23 +29,23 @@ router.post('/login', async (res, req) => {
         if (!userData) {
             res.status(400)
             .json({ message: 'Incorrect email or password. Please try again! '});
-            return
+            return;
         }
 
         const validPw = await userData.checkPassword(req.body.password);
         if (!validPw) {
             res.status(400)
             .json({ message: 'Incorrect email or password. Please try again!'});
-            return
+            return;
         }
 
         req.session.save(() => {
+            req.session.user_id = userData.id
             req.session.logged_in = true;
-            res.status(200)
-            .json({ user: userData, message: 'You have successfully logged in!' });
+            res.json({ user: userData, message: 'You have successfully logged in!' });
         })
     } catch (err) {
-        res.status(500).json(err)
+        res.status(400).json(err)
     }
 });
 
