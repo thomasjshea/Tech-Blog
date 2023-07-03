@@ -78,7 +78,7 @@ router.get('/login', (req, res) => {
 router.get('/editpost', async (req, res) => {
     try {
         const userData = await User.findByPk(req.session.user_id, {
-            attributes: { exclude: ['password'] },
+            attributes: { exclude: [password] },
             include: [{ model: BlogPost}], 
         });
         const user = userData.get({ plain: true });
