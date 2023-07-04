@@ -50,20 +50,19 @@ router.get('/blogpost/:id', async (req, res) => {
 // Route to profile page
 router.get('/profile', withAuth, async (req, res) => {
     try {
-        const userData = await User.findByPk(req.session.user_id, {
-            attributes: { exclude: ['password'] },
-            include: [{ model: BlogPost }],
-        });
-        const user = userData.get({ plain: true });
-
-        res.render('profile', {
-            ...user,
-            logged_in: true
-        });
+      const userData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ['password'] },
+        include: [{ model: BlogPost }],
+      });
+      const user = userData.get({ plain: true });
+      res.render('profile', {
+        ...user,
+        logged_in: true
+      });
     } catch (err) {
-        res.status(500).json(err);
+      res.status(500).json(err);
     }
-});
+  });
 
 // Route to login page
 router.get('/login', (req, res) => {
